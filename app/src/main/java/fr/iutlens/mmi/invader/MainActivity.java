@@ -27,4 +27,5 @@ public class MainActivity extends AppCompatActivity {
     public void onFire(View view) {
         gameView.onFire();
     }
+
 }
