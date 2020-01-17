@@ -67,6 +67,7 @@ public class GameView extends View implements TimerAction {
         SpriteSheet.register(R.mipmap.missile,4,1,this.getContext());
         SpriteSheet.register(R.mipmap.laser,1,1,this.getContext());
         SpriteSheet.register(R.mipmap.rocket,1,1,this.getContext());
+        SpriteSheet.register(R.mipmap.background2,1,1,this.getContext());
 
         transform = new Matrix();
         reverse = new Matrix();
@@ -130,10 +131,19 @@ public class GameView extends View implements TimerAction {
         // On met une couleur de fond
         canvas.drawColor(0xff000077);
 
+
+
         // On choisit la transformation à appliquer à la vue i.e. la position
         // de la "camera"
 
         canvas.concat(transform);
+
+
+        canvas.save();
+        canvas.scale(8,8);
+        SpriteSheet.get(R.mipmap.background2).paint(canvas,0,0,0);
+
+        canvas.restore();
 
         for(Sprite s : missile){
             s.paint(canvas);
