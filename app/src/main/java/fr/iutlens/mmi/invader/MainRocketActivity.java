@@ -1,6 +1,7 @@
 package fr.iutlens.mmi.invader;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,6 +22,8 @@ public class MainRocketActivity extends AppCompatActivity {
 
     public void slidetop(View view) {
         findViewById(R.id.rocket).startAnimation(AnimationUtils.loadAnimation(this,R.anim.slidetop));
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
