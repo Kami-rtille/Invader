@@ -64,7 +64,7 @@ public class GameView extends View implements TimerAction {
 
         // Chargement des feuilles de sprites
         SpriteSheet.register(R.mipmap.alien,2,1,this.getContext());
-        SpriteSheet.register(R.mipmap.missile,4,1,this.getContext());
+        SpriteSheet.register(R.mipmap.missile,1,1,this.getContext());
         SpriteSheet.register(R.mipmap.laser,1,1,this.getContext());
         SpriteSheet.register(R.mipmap.rocket,1,1,this.getContext());
         SpriteSheet.register(R.mipmap.background2,1,1,this.getContext());
@@ -107,7 +107,7 @@ public class GameView extends View implements TimerAction {
     @Override
     public void update() {
         if (this.isShown()) { // Si la vue est visible
-            timer.scheduleRefresh(30); // programme le prochain rafraichissement
+            timer.scheduleRefresh(15); // programme le prochain rafraichissement
 
             armada.testIntersection(laser);
             armada.act();
