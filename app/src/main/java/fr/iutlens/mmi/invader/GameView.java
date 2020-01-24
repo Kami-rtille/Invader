@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import fr.iutlens.mmi.invader.utils.SpriteSheet;
 import fr.iutlens.mmi.invader.utils.TimerAction;
 
 
-public class GameView extends View implements TimerAction {
+public class GameView extends View implements TimerAction, View.OnTouchListener {
     private RefreshHandler timer;
 
     // taille de l'écran virtuel
@@ -35,6 +36,7 @@ public class GameView extends View implements TimerAction {
     private Canon canon;
     private List<Projectile> missile;
     private List<Projectile> laser;
+    private float oldX= -1000;
 
 
     public GameView(Context context) {
@@ -86,14 +88,9 @@ public class GameView extends View implements TimerAction {
         // Gestion du rafraichissement de la vue. La méthode update (juste en dessous)
         // sera appelée toutes les 30 ms
         timer = new RefreshHandler(this);
+        timer.scheduleRefresh(30);
 
-        // Un clic sur la vue lance (ou relance) l'animation
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!timer.isRunning()) timer.scheduleRefresh(30);
-            }
-        });
+        this.setOnTouchListener(this);
     }
 
 
@@ -204,4 +201,22 @@ public class GameView extends View implements TimerAction {
 
     }
 
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_MOVE ||
+                motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+            float[] coord = {motionEvent.getX(),motionEvent.getY()};
+            reverse.mapPoints(coord);
+
+
+
+            if (oldX != -1000) canon.x += (coord[0]-oldX);
+            oldX =  coord[0];
+            return true;
+        } else if (motionEvent.getAction()== MotionEvent.ACTION_UP){
+            oldX = -1000;
+        }
+
+        return false;
+    }
 }
